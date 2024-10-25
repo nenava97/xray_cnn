@@ -9,7 +9,7 @@ sudo apt-get update -y
 sudo apt install -y python3-pip python3-venv git
 
 # Download repo
-git clone https://github.com/elmorenox/CNN_deploy.git /home/ubuntu/CNN_deploy
+git clone https://github.com/nenava97/xray_cnn.git /home/ubuntu/CNN_deploy
 
 # Set permissions on the repo
 sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
