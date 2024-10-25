@@ -283,7 +283,7 @@ output "ec2_key" {
 }
 
 output "ml_training_server_ip" {
-  value = aws_instance.ml_training_instance.public_ip
+  value = aws_instance.ml_training_server.public_ip
 }
 
 output "api_server_ip" {
