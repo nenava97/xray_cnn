@@ -287,7 +287,7 @@ output "ml_training_server_ip" {
 }
 
 output "api_server_ip" {
-  value = aws_instance.api_server.private_ip
+  value = aws_instance.ml_app_server.private_ip
 }
 
 
