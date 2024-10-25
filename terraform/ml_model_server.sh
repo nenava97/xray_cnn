@@ -29,9 +29,9 @@ sudo apt-get -y install cuda-drivers
 sudo apt-get install -y cuda
 
 # Set up CUDA environment variables
-echo 'export PATH=/usr/local/cuda/bin:$PATH' >> /home/ubuntu/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
-source /home/ubuntu/.bashrc
+echo 'export PATH=/usr/local/cuda/bin:$PATH' >> /.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /.bashrc
+source /.bashrc
 
 
 echo "GPU setup complete. Rebooting..."
@@ -43,7 +43,7 @@ aws s3 cp s3://x-raysbucket/chest_xray/ /home/ubuntu/chest_xray --recursive
 
 # Clone repository
 git clone https://github.com/elmorenox/CNN_deploy.git
-cd /home/ubuntu/CNN_deploy
+cd /CNN_deploy
 
 # Create and activate virtual environment
 python3 -m venv venv
