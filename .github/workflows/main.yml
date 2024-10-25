@@ -1,4 +1,4 @@
-name: Deploy Pneumonia Detection System
+name: Deploy Pneumonia Detection System in Infra w/ Terraform
 
 on:
   push:
