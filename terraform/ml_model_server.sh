@@ -42,7 +42,7 @@ sudo reboot
 aws s3 cp s3://x-raysbucket/chest_xray/ /home/ubuntu/chest_xray --recursive
 
 # Download repo
-git clone https://github.com/elmorenox/CNN_deploy.git /home/ubuntu/CNN_deploy
+git clone https://github.com/nenava97/xray_cnn.git /home/ubuntu/CNN_deploy
 
 # Set permissions on the repo
 sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
