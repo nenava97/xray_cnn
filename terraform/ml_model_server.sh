@@ -41,17 +41,25 @@ sudo reboot
 # aws cli must be set up before this step
 aws s3 cp s3://x-raysbucket/chest_xray/ /home/ubuntu/chest_xray --recursive
 
-# Clone repository
-git clone https://github.com/elmorenox/CNN_deploy.git
-cd /CNN_deploy
+# Download repo
+git clone https://github.com/elmorenox/CNN_deploy.git /home/ubuntu/CNN_deploy
 
-# Create and activate virtual environment
+# Set permissions on the repo
+sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
+
+cd /home/ubuntu/CNN_deploy/pneumonia_web
+
+# Set up virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
-# Install requirements
+# Install required packages
 pip install --upgrade pip
 pip install -r requirements.txt
+
+# Ensure log files exist, set ownership to ubuntu, and permissions to be writable
+sudo chown ubuntu:ubuntu /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
+chmod 664 /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
 
 # Run training
 echo "Starting model training..."
