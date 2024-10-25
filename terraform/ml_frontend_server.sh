@@ -24,12 +24,12 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Ensure log files exist, set ownership to ubuntu, and permissions to be writable
-sudo chown ubuntu:ubuntu /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
-chmod 664 /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
+# # Ensure log files exist, set ownership to ubuntu, and permissions to be writable
+# sudo chown ubuntu:ubuntu /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
+# chmod 664 /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
 
-# Delay to ensure environment setup is complete
-sleep 10
+# # Delay to ensure environment setup is complete
+# sleep 10
 
-# Start the application with nohup to keep it running and log output
-nohup gunicorn --config gunicorn_config.py app:app &
+# # Start the application with nohup to keep it running and log output
+# nohup gunicorn --config gunicorn_config.py app:app &
