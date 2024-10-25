@@ -47,7 +47,7 @@ git clone https://github.com/nenava97/xray_cnn.git /home/ubuntu/CNN_deploy
 # Set permissions on the repo
 sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
 
-cd /home/ubuntu/CNN_deploy/pneumonia_web
+cd /home/ubuntu/CNN_deploy/model
 
 # Set up virtual environment
 python3 -m venv venv
