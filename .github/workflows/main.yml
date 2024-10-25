@@ -37,15 +37,15 @@ jobs:
         with:
           terraform_version: 1.5.3
 
-      # - name: Terraform Init
-      #   run: terraform init
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform/
+      # - name: Terraform Destroy
+      #   run: terraform destroy
       #   working-directory: terraform/
-      # # - name: Terraform Destroy
-      # #   run: terraform destroy
-      # #   working-directory: terraform/
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
-      #   working-directory: terraform/
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: terraform/
 
       # # ML Training Server Setup (model directory)
       # - name: Deploy ML Training Server
