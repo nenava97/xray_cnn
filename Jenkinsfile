@@ -1,6 +1,13 @@
 pipeline {
   agent any
     stages {
+        stage ('Build') {
+        steps {
+          sh '''#!/bin/bash
+          git clone https://github.com/nenava97/xray_cnn.git
+          '''
+       }
+     }
         stage('Plan') {
              steps {
               withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'aws_access_key_id'), 
