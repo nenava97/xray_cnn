@@ -3,7 +3,7 @@ name: Deploy Pneumonia Detection System
 on:
   push:
     branches:
-      - main
+      #- main
 
 jobs:
   deploy:
