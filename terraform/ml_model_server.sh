@@ -57,10 +57,6 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Ensure log files exist, set ownership to ubuntu, and permissions to be writable
-sudo chown ubuntu:ubuntu /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
-chmod 664 /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_web/error.log
-
 # Run training
 echo "Starting model training..."
 python3 cnn.py
