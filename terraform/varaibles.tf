@@ -11,7 +11,7 @@ variable "subnet_cidr_blocks" {
 
 variable "ml_availability_zone" {
   description = "Availability Zone for ML infrastructure"
-  default     = "us-east-1b"
+  default     = "us-east-1a"
 }
 
 variable "app_availability_zone" {
