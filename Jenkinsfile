@@ -5,6 +5,7 @@ pipeline {
         steps {
           sh '''#!/bin/bash
           git clone https://github.com/nenava97/xray_cnn.git
+          cd /xray_cnn/terraform
           '''
        }
      }
