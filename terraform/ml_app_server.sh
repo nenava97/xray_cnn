@@ -21,6 +21,14 @@ pip install -r requirements.txt
 # protected-mode no
 # sudo systemctl restart redis
 
+# Update the Redis configuration to allow access from any IP
+sudo sed -i 's/^# bind 127.0.0.1 ::1/bind 0.0.0.0/' /etc/redis/redis.conf
+sudo sed -i 's/^protected-mode yes/protected-mode no/' /etc/redis/redis.conf
+
+# Restart Redis to apply the changes
+sudo systemctl restart redis
+
+
 #start gunicorn
 gunicorn --config gunicorn_config.py app:app
 
