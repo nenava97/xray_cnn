@@ -237,7 +237,7 @@ resource "aws_instance" "ml_ui_server" {
   vpc_security_group_ids      = [aws_security_group.ml_frontend_security_group.id]
   key_name                    = var.key_name
   associate_public_ip_address = true
-
+  user_data = "${file("ml_frontend_server.sh")}"
   tags = {
     Name = "ml_ui_server"
   }
@@ -249,6 +249,7 @@ resource "aws_instance" "ml_app_server" {
   subnet_id              = aws_subnet.ml_private_subnet_app.id
   vpc_security_group_ids = [aws_security_group.ml_backend_security_group.id]
   key_name               = var.key_name
+  user_data = "${file("ml_app_server.sh")}"
 
   tags = {
     Name = "ml_app_server"
@@ -261,6 +262,7 @@ resource "aws_instance" "ml_training_server" {
   subnet_id              = aws_subnet.ml_private_subnet_training.id
   vpc_security_group_ids = [aws_security_group.ml_backend_security_group.id]
   key_name               = var.key_name
+  user_data = "${file("ml_model_server.sh")}"
 
   tags = {
     Name = "ml_training_server"
