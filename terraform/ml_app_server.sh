@@ -7,7 +7,7 @@ sudo apt install python3-pip python3-venv
 # download repo
 git clone https://github.com/elmorenox/CNN_deploy.git
 
-cd ~/CNN_DEPLOY/pneumonia_api
+cd ~/CNN_deploy/pneumonia_api
 python3 -m venv venv
 
 source venv/bin/active
@@ -31,4 +31,3 @@ sudo systemctl restart redis
 
 #start gunicorn
 gunicorn --config gunicorn_config.py app:app
-
