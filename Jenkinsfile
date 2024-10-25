@@ -1,19 +1,18 @@
 pipeline {
   agent any
     stages {
-        stage ('Build') {
-        steps {
-          sh '''#!/bin/bash
-          git clone https://github.com/nenava97/xray_cnn.git
-          cd /var/lib/jenkins/workspace/AIWL1/xray_cnn/terraform
-          '''
-       }
-     }
+       stage('Init') {
+         steps {
+            dir('Terraform') {
+              sh 'terraform init' 
+              }
+          }
+        }   
         stage('Plan') {
              steps {
               withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'aws_access_key_id'), 
                             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'aws_secret_access_key')]) {
-                                dir('Demo_Terraform') {
+                                dir('terraform') {
                                   sh 'terraform plan -out plan.tfplan -var="aws_access_key_id=${aws_access_key_id}" -var="aws_secret_access_key=${aws_secret_access_key}"' 
                                 }
               }
@@ -23,7 +22,7 @@ pipeline {
             steps {
               withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'aws_access_key_id'), 
                             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'aws_secret_access_key')]) {
-                                dir('Demo_Terraform') {
+                                dir('terraform') {
                                   sh 'terraform apply plan.tfplan' 
                                 }
                             }
