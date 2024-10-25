@@ -57,12 +57,12 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Run training
-echo "Starting model training..."
-python3 cnn.py
+# # Run training
+# echo "Starting model training..."
+# python3 cnn.py
 
-# Run inference test
-# redis database must be set up on ml app server before this run so that db is available
-# Inference script must be configured with the private ip of the api server
-echo "Running inference tests..."
-python3 inference.py
+# # Run inference test
+# # redis database must be set up on ml app server before this run so that db is available
+# # Inference script must be configured with the private ip of the api server
+# echo "Running inference tests..."
+# python3 inference.py
