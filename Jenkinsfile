@@ -23,11 +23,52 @@ pipeline {
               withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'aws_access_key_id'), 
                             string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'aws_secret_access_key')]) {
                                 dir('terraform') {
-                                  sh 'terraform apply plan.tfplan' 
+                                  script {
+                                    sh 'terraform apply -auto-approve tfplan'
+                                    def outputs = sh(script: 'terraform output -json', returnStdout: true).trim()
+                                    def parsedOutputs = readJSON text: outputs
+                                    EC2_KEY = parsedOutputs.ec2_key.value
+                                    API_SERVER_API = parsedOutputs.api_server_api.value
+                                  } 
                                 }
                             }
             }  
           }
+      stage('Update Inference Script on ML Training Server') {
+            steps {
+                script {
+                    // Replace 'backend' in inference.py with API_SERVER_API
+                    sh """
+                    ssh -i ${EC2_KEY} ubuntu@${ML_TRAINING_SERVER} "sed -i 's/backend/${API_SERVER_API}/g' CNN_deploy/model/inference.py"
+                    """
+                }
+            }
+        }
+        stage('Update App Script on UI Server') {
+            steps {
+                script {
+                    // Replace 'backend' in app.py with API_SERVER_API
+                    sh """
+                    ssh -i ${EC2_KEY} ubuntu@${UI_SERVER} "sed -i 's/backend/${API_SERVER_API}/g' CNN_deploy/pneumonia_web/app.py"
+                    """
+                }
+            }
+        }
+        stage('Application Setup on UI Server') {
+            steps {
+                script {
+                    sh """
+                    ssh -i ${EC2_KEY} ubuntu@${UI_SERVER} << EOF
+                        cd ~/CNN_deploy/pneumonia_web
+                        python3 -m venv venv
+                        source venv/bin/activate
+                        pip install -r requirements.txt
+                        gunicorn --config gunicorn_config.py app:app
+                    EOF
+                    """
+                }
+            }
+        }
     }
 }
 // pipeline {
