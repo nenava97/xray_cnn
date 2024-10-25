@@ -3,7 +3,7 @@ name: Deploy Pneumonia Detection System
 on:
   push:
     branches:
-      #- main
+      - main
 
 jobs:
   deploy:
@@ -40,75 +40,75 @@ jobs:
       - name: Terraform Init
         run: terraform init
         working-directory: terraform/
-      - name: Terraform Destroy
-        run: terraform destroy
-        working-directory: terraform/
+      # - name: Terraform Destroy
+      #   run: terraform destroy
+      #   working-directory: terraform/
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: terraform/
 
-      # ML Training Server Setup (model directory)
-      - name: Deploy ML Training Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_ML_KEY }} ubuntu@{{ env.ML_TRAINING_SERVER_IP }} << 'EOF'
-          # System package updates and installs
-          sudo apt-get update && sudo apt-get upgrade -y
-          sudo apt-get install -y python3-pip python3-venv awscli wget git build-essential
+      # # ML Training Server Setup (model directory)
+      # - name: Deploy ML Training Server
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_ML_KEY }} ubuntu@{{ env.ML_TRAINING_SERVER_IP }} << 'EOF'
+      #     # System package updates and installs
+      #     sudo apt-get update && sudo apt-get upgrade -y
+      #     sudo apt-get install -y python3-pip python3-venv awscli wget git build-essential
           
-          # NVIDIA/CUDA setup (manual step may be required here)
-          wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-          sudo dpkg -i cuda-keyring_1.1-1_all.deb
-          sudo apt-get update && sudo apt-get -y install cuda-drivers cuda
+      #     # NVIDIA/CUDA setup (manual step may be required here)
+      #     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+      #     sudo dpkg -i cuda-keyring_1.1-1_all.deb
+      #     sudo apt-get update && sudo apt-get -y install cuda-drivers cuda
 
-          # Environment setup
-          cd ~/CNN_deploy
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+      #     # Environment setup
+      #     cd ~/CNN_deploy
+      #     python3 -m venv venv
+      #     source venv/bin/activate
+      #     pip install -r requirements.txt
 
-          # Configure inference.py with Redis private IP
-          echo 'MANUAL STEP: Configure REDIS_HOST in inference.py with the Redis server private IP'
-          EOF
+      #     # Configure inference.py with Redis private IP
+      #     echo 'MANUAL STEP: Configure REDIS_HOST in inference.py with the Redis server private IP'
+      #     EOF
 
-      # ML API/Redis Server Setup (pneumonia_api directory)
-      - name: Deploy API/Redis Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_API_KEY }} ubuntu@{{ env.API_SERVER_IP }} << 'EOF'
-          # System package updates and installs
-          sudo apt-get update
-          sudo apt-get install redis-server python3-pip python3-venv
+      # # ML API/Redis Server Setup (pneumonia_api directory)
+      # - name: Deploy API/Redis Server
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_API_KEY }} ubuntu@{{ env.API_SERVER_IP }} << 'EOF'
+      #     # System package updates and installs
+      #     sudo apt-get update
+      #     sudo apt-get install redis-server python3-pip python3-venv
 
-          # Redis configuration (manual configuration required)
-          echo 'MANUAL STEP: Modify /etc/redis/redis.conf to bind 0.0.0.0 and set protected-mode to no'
-          sudo systemctl restart redis
+      #     # Redis configuration (manual configuration required)
+      #     echo 'MANUAL STEP: Modify /etc/redis/redis.conf to bind 0.0.0.0 and set protected-mode to no'
+      #     sudo systemctl restart redis
 
-          # Application setup
-          cd ~/CNN_deploy/pneumonia_api
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+      #     # Application setup
+      #     cd ~/CNN_deploy/pneumonia_api
+      #     python3 -m venv venv
+      #     source venv/bin/activate
+      #     pip install -r requirements.txt
 
-          # Start API server
-          gunicorn --config gunicorn_config.py app:app
-          EOF
+      #     # Start API server
+      #     gunicorn --config gunicorn_config.py app:app
+      #     EOF
 
-      # Frontend Server Setup (pneumonia_web directory)
-      - name: Deploy Frontend Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_FRONTEND_KEY }} ubuntu@{{ env.FRONTEND_SERVER_IP }} << 'EOF'
-          # System package updates and installs
-          sudo apt-get update
-          sudo apt-get install python3-pip python3-venv
+      # # Frontend Server Setup (pneumonia_web directory)
+      # - name: Deploy Frontend Server
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_FRONTEND_KEY }} ubuntu@{{ env.FRONTEND_SERVER_IP }} << 'EOF'
+      #     # System package updates and installs
+      #     sudo apt-get update
+      #     sudo apt-get install python3-pip python3-venv
 
-          # Application setup
-          cd ~/CNN_deploy/pneumonia_web
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
+      #     # Application setup
+      #     cd ~/CNN_deploy/pneumonia_web
+      #     python3 -m venv venv
+      #     source venv/bin/activate
+      #     pip install -r requirements.txt
 
-          # Configure API endpoint in app.py (manual step required)
-          echo 'MANUAL STEP: Set API_URL to private IP of API server in app.py'
+      #     # Configure API endpoint in app.py (manual step required)
+      #     echo 'MANUAL STEP: Set API_URL to private IP of API server in app.py'
 
-          # Start frontend server
-          gunicorn --config gunicorn_config.py app:app
-          EOF
+      #     # Start frontend server
+      #     gunicorn --config gunicorn_config.py app:app
+      #     EOF
