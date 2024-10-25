@@ -267,6 +267,30 @@ resource "aws_instance" "ml_training_server" {
   }
 }
 
+resource "tls_private_key" "my_key" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+
+resource "aws_key_pair" "my_key" {
+  key_name   = "my_key"
+  public_key = tls_private_key.my_key.public_key_openssh
+}
+
+output "ec2_key" {
+  value = tls_private_key.my_key.private_key_pem
+  sensitive = true
+}
+
+output "ml_training_server_ip" {
+  value = aws_instance.ml_training_instance.public_ip
+}
+
+output "api_server_ip" {
+  value = aws_instance.api_server.private_ip
+}
+
+
 output "nginx_ip" {
   value = aws_instance.ml_nginx_server.public_ip
 }
