@@ -3,7 +3,7 @@ name: Deploy Pneumonia Detection System in Infra w/ Terraform
 on:
   push:
     branches:
-      - main
+      #- main
 
 jobs:
   deploy:
