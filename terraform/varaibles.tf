@@ -1,3 +1,11 @@
+variable "aws_access_key_id" {
+  sensitive = true
+}
+
+variable "aws_secret_access_key" {
+  sensitive = true
+}
+
 variable "vpc_cidr_block" {
   description = "CIDR block for the ML VPC"
   default     = "10.0.0.0/16"
