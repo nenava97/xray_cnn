@@ -4,16 +4,25 @@ sudo apt-get update
 sudo apt-get install redis-server
 sudo apt install python3-pip python3-venv
 
-# download repo
-git clone https://github.com/elmorenox/CNN_deploy.git
+# Download repo
+git clone https://github.com/elmorenox/CNN_deploy.git /home/ubuntu/CNN_deploy
 
-cd /CNN_deploy/pneumonia_api
+# Set permissions on the repo
+sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
+
+cd /home/ubuntu/CNN_deploy/pneumonia_api
+
+# Set up virtual environment
 python3 -m venv venv
+source venv/bin/activate
 
-source venv/bin/active
-
+# Install required packages
 pip install --upgrade pip
 pip install -r requirements.txt
+
+# Ensure log files exist, set ownership to ubuntu, and permissions to be writable
+sudo chown ubuntu:ubuntu /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_api/error.log
+chmod 664 /home/ubuntu/CNN_deploy/pneumonia_web/access.log /home/ubuntu/CNN_deploy/pneumonia_api/error.log
 
 # allow access from the ML training server
 # vim /etc/redis/redis.conf
