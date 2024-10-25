@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sudo apt-get update
-sudo apt-get install redis-server
-sudo apt install python3-pip python3-venv
+sudo apt-get update -y
+sudo apt-get install -y redis-server
+sudo apt install -y python3-pip python3-venv
 
 # Download repo
 git clone https://github.com/elmorenox/CNN_deploy.git /home/ubuntu/CNN_deploy
