@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import os
 
 # Connect to Redis
-r = redis.Redis(host='backendapi_private_ip', port=6379, db=0)
+r = redis.Redis(host='backendapi', port=6379, db=0)
 
 # Load the model
 model = load_model('pneumonia_model.keras')
