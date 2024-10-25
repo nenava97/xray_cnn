@@ -50,7 +50,7 @@ jobs:
       # ML Training Server Setup (model directory)
       - name: Deploy ML Training Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_ML_KEY }} ubuntu@<ML_TRAINING_SERVER_IP> &&
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_ML_KEY }} ubuntu@{{ env.ML_TRAINING_SERVER_IP }} << 'EOF'
           # System package updates and installs
           sudo apt-get update && sudo apt-get upgrade -y
           sudo apt-get install -y python3-pip python3-venv awscli wget git build-essential
@@ -73,7 +73,7 @@ jobs:
       # ML API/Redis Server Setup (pneumonia_api directory)
       - name: Deploy API/Redis Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_API_KEY }} ubuntu@<API_SERVER_IP> &&
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_API_KEY }} ubuntu@{{ env.API_SERVER_IP }} << 'EOF'
           # System package updates and installs
           sudo apt-get update
           sudo apt-get install redis-server python3-pip python3-venv
@@ -95,7 +95,7 @@ jobs:
       # Frontend Server Setup (pneumonia_web directory)
       - name: Deploy Frontend Server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_FRONTEND_KEY }} ubuntu@<FRONTEND_SERVER_IP> &&
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_FRONTEND_KEY }} ubuntu@{{ env.FRONTEND_SERVER_IP }} << 'EOF'
           # System package updates and installs
           sudo apt-get update
           sudo apt-get install python3-pip python3-venv
