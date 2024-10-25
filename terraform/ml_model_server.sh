@@ -14,6 +14,12 @@ sudo apt-get install -y \
     wget \
     git \
     build-essential
+sudo apt-get install unzip  # Added unzip installation
+
+# Install AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 
 # Install NVIDIA drivers and CUDA
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
