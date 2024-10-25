@@ -29,9 +29,9 @@ sudo apt-get -y install cuda-drivers
 sudo apt-get install -y cuda
 
 # Set up CUDA environment variables
-echo 'export PATH=/usr/local/cuda/bin:$PATH' >> ~/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
-source ~/.bashrc
+echo 'export PATH=/usr/local/cuda/bin:$PATH' >> /home/ubuntu/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
+source /home/ubuntu/.bashrc
 
 
 echo "GPU setup complete. Rebooting..."
@@ -39,11 +39,11 @@ sudo reboot
 
 # Download dataset from S3
 # aws cli must be set up before this step
-aws s3 cp s3://x-raysbucket/chest_xray/ ~/chest_xray --recursive
+aws s3 cp s3://x-raysbucket/chest_xray/ /home/ubuntu/chest_xray --recursive
 
 # Clone repository
 git clone https://github.com/elmorenox/CNN_deploy.git
-cd ~/CNN_deploy
+cd /home/ubuntu/CNN_deploy
 
 # Create and activate virtual environment
 python3 -m venv venv
