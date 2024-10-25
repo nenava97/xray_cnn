@@ -8,7 +8,7 @@ sudo apt install -y python3-pip python3-venv
 # Download repo
 git clone https://github.com/elmorenox/CNN_deploy.git
 
-cd ~/CNN_deploy/pneumonia_web
+cd /home/ubuntu/CNN_deploy/pneumonia_web
 
 # Set up virtual environment
 python3 -m venv venv
