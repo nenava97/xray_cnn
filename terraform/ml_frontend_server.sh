@@ -20,4 +20,4 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # Start the application
-gunicorn --config gunicorn_config.py app:app
+nohup gunicorn --config gunicorn_config.py app:app &
