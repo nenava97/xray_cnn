@@ -21,7 +21,8 @@ pipeline {
                             }
             }  
           }
-
+    }
+}
 // pipeline {
 //     agent any
 
