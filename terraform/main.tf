@@ -252,7 +252,10 @@ resource "aws_instance" "ml_app_server" {
   vpc_security_group_ids = [aws_security_group.ml_backend_security_group.id]
   key_name               = var.key_name
   user_data = "${file("ml_app_server.sh")}"
-
+  provisioner "file" {
+    source      = "redis.conf"
+    destination = "/etc/redis/redis.conf"
+  }
   tags = {
     Name = "ml_app_server"
   }
