@@ -354,7 +354,7 @@ resource "aws_instance" "ml_app_server" {
 # Check for the Redis directory, create if it doesn't exist
       "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
       "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
-      "sudo systemctl restart redis"
+      "sudo systemctl restart redis-server"
     ]
     connection {
       type               = "ssh"
