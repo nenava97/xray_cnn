@@ -351,6 +351,8 @@ resource "aws_instance" "ml_app_server" {
   # Restart Redis after copying the configuration to final destination
   provisioner "remote-exec" {
     inline = [
+# Check for the Redis directory, create if it doesn't exist
+      "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
       "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
       "sudo systemctl restart redis"
     ]
