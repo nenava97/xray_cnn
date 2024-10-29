@@ -2,11 +2,12 @@
 
 sudo apt-get update -y
 sudo apt-get install -y redis-server
-sleep 60
 sudo apt install -y python3-pip python3-venv
 
 # Download repo
 git clone https://github.com/nenava97/xray_cnn.git /home/ubuntu/CNN_deploy
+sudo mv /home/ubuntu/CNN_deploy/terraform/redis.conf /etc/redis/redis.conf
+sudo systemctl restart redis-server"
 
 # Set permissions on the repo
 sudo chown -R ubuntu:ubuntu /home/ubuntu/CNN_deploy
