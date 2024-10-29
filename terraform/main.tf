@@ -315,23 +315,23 @@ resource "aws_instance" "ml_app_server" {
   user_data              = file("ml_app_server.sh")
 
   # Wait for user_data to complete by checking NginX or Redis installation
-  provisioner "remote-exec" {
-    inline = [
-      # Check for the Redis directory, create if it doesn't exist
-      "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
-      # Wait until Redis is installed by checking for redis-server binary
-      "while ! command -v redis-server >/dev/null 2>&1; do sleep 5; done"
-    ]
-    connection {
-      type           = "ssh"
-      user           = "ubuntu"
-      private_key    = tls_private_key.my_key.private_key_pem
-      host           = self.private_ip  # Use private IP since it's in a private subnet
-      bastion_host   = aws_instance.ml_nginx_server.public_ip
-      bastion_user   = "ubuntu"
-      bastion_private_key = tls_private_key.my_key.private_key_pem  # Ensure access via the bastion
-    }
-  }
+#  provisioner "remote-exec" {
+#    inline = [
+#      # Check for the Redis directory, create if it doesn't exist
+#      "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
+#      # Wait until Redis is installed by checking for redis-server binary
+#      "while ! command -v redis-server >/dev/null 2>&1; do sleep 5; done"
+#    ]
+#    connection {
+#      type           = "ssh"
+#      user           = "ubuntu"
+#      private_key    = tls_private_key.my_key.private_key_pem
+#      host           = self.private_ip  # Use private IP since it's in a private subnet
+#      bastion_host   = aws_instance.ml_nginx_server.public_ip
+#      bastion_user   = "ubuntu"
+#      bastion_private_key = tls_private_key.my_key.private_key_pem  # Ensure access via the bastion
+#    }
+#  }
 
   # Provisioner to copy redis.conf to the instance
   provisioner "file" {
