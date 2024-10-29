@@ -2,6 +2,7 @@
 
 sudo apt-get update -y
 sudo apt-get install -y redis-server
+sleep 60
 sudo apt install -y python3-pip python3-venv
 
 # Download repo
