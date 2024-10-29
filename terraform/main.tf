@@ -333,39 +333,39 @@ resource "aws_instance" "ml_app_server" {
 #    }
 #  }
 
-  # Provisioner to copy redis.conf to the instance
-  provisioner "file" {
-    source      = "redis.conf"
-    destination = "/tmp/redis.conf"  # Upload to /tmp directory first
-    connection {
-      type               = "ssh"
-      user               = "ubuntu"
-      private_key        = tls_private_key.my_key.private_key_pem
-      host               = self.private_ip
-      bastion_host       = aws_instance.ml_nginx_server.public_ip
-      bastion_user       = "ubuntu"
-      bastion_private_key = tls_private_key.my_key.private_key_pem
-    }
-  }
+#  # Provisioner to copy redis.conf to the instance
+#  provisioner "file" {
+#    source      = "redis.conf"
+#    destination = "/tmp/redis.conf"  # Upload to /tmp directory first
+#    connection {
+#      type               = "ssh"
+#      user               = "ubuntu"
+#      private_key        = tls_private_key.my_key.private_key_pem
+#      host               = self.private_ip
+#      bastion_host       = aws_instance.ml_nginx_server.public_ip
+#      bastion_user       = "ubuntu"
+#      bastion_private_key = tls_private_key.my_key.private_key_pem
+#    }
+#  }
 
-  # Restart Redis after copying the configuration to final destination
-  provisioner "remote-exec" {
-    inline = [
-# Check for the Redis directory, create if it doesn't exist
-      "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
-      "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
-      "sudo systemctl restart redis-server"
-    ]
-    connection {
-      type               = "ssh"
-      user               = "ubuntu"
-      private_key        = tls_private_key.my_key.private_key_pem
-      host               = self.private_ip
-      bastion_host       = aws_instance.ml_nginx_server.public_ip
-      bastion_user       = "ubuntu"
-      bastion_private_key = tls_private_key.my_key.private_key_pem
-    }
-  }
+#  # Restart Redis after copying the configuration to final destination
+#  provisioner "remote-exec" {
+#    inline = [
+## Check for the Redis directory, create if it doesn't exist
+#      "if [ ! -d /etc/redis ]; then sudo mkdir -p /etc/redis; fi",
+#      "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
+#      "sudo systemctl restart redis-server"
+#    ]
+#    connection {
+#      type               = "ssh"
+#      user               = "ubuntu"
+#      private_key        = tls_private_key.my_key.private_key_pem
+#      host               = self.private_ip
+#      bastion_host       = aws_instance.ml_nginx_server.public_ip
+#      bastion_user       = "ubuntu"
+#      bastion_private_key = tls_private_key.my_key.private_key_pem
+#    }
+#  }
 
   tags = {
     Name = "ml_app_server"
